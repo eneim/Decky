@@ -14,15 +14,24 @@
   ~    limitations under the License.
   -->
 
+<!-- merge to parent FrameLayout -->
+
 <merge
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:text="EMPTY"
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"/>
 
     <im.ene.lab.decky.StackView
         android:id="@+id/stackview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#ffaeaeae"
+        android:background="#40aeaeae"
         app:rotation_degrees="15.5"/>
 
     <LinearLayout

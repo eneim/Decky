@@ -18,6 +18,9 @@ package im.ene.lab.swipecards;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -65,11 +68,38 @@ public class MainActivity extends AppCompatActivity {
 
     mAdapter = new ArrayStackAdapter<>(this, R.layout.card_item, R.id.text_view, mStrings);
     mStackView.setAdapter(mAdapter);
+
+    mStackView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+      @Override public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+      }
+    });
+
+    mStackView.setOnSwipeListener(new StackView.OnCardSwipeListener() {
+      @Override public void onExiting(View view, float offset) {
+        Log.d("exiting", offset + "");
+      }
+
+      @Override public void onExited(View view) {
+
+      }
+
+      @Override public void onExitToLeft(View view) {
+
+      }
+
+      @Override public void onExitToRight(View view) {
+
+      }
+
+      @Override public void onAdapterAboutToEmpty(int count) {
+
+      }
+    });
   }
 
   @Override protected void onDestroy() {
     ButterKnife.unbind(this);
     super.onDestroy();
   }
-
 }

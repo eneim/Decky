@@ -209,8 +209,9 @@ abstract class OnTopViewTouchListener implements View.OnTouchListener {
   abstract void onFlingTopView(float offset);
 
   private float getFlingOffset() {
-    float zeroToOneValue = (mFrame.getX() + mFrameHalfWidth - mParent.getLeft())
-        / (mParent.getRight() - mParent.getLeft());
+    float zeroToOneValue =
+        (mFrame.getX() + mFrameHalfWidth - mParent.getLeft())
+            / (mParent.getRight() - mParent.getLeft());
     if (zeroToOneValue < 0) {
       zeroToOneValue = 0.f;
     }
@@ -252,7 +253,7 @@ abstract class OnTopViewTouchListener implements View.OnTouchListener {
         mFrame.setX(animatedX);
         mFrame.setY(animatedY);
         mFrame.setRotation(getExitRotation(isSwipeToLeft, factor));
-        onFlingTopView(factor);
+        onFlingTopView(isSwipeToLeft ? -factor : factor);
       }
     });
 
