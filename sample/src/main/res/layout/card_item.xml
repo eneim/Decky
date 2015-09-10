@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="480dp"
+             android:layout_width="320dp"
+             android:layout_height="240dp"
              android:layout_gravity="center"
              android:layout_margin="16dp"
              android:background="#fff000"
              android:padding="12dp">
 
     <TextView
-        android:id="@+id/helloText"
+        android:id="@+id/text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#3e3639"
         android:gravity="center"
-        android:textColor="@android:color/white"
-        android:textSize="40sp"/>
+        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:textColor="@android:color/white"/>
 
     <View
         android:id="@+id/item_swipe_left_indicator"

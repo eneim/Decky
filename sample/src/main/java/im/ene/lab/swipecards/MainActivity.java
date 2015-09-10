@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity {
       mStrings.add("Pos: " + i);
     }
 
-    mAdapter = new ArrayStackAdapter<>(this, R.layout.item, R.id.helloText, mStrings);
+    mAdapter = new ArrayStackAdapter<>(this, R.layout.card_item, R.id.text_view, mStrings);
     mStackView.setAdapter(mAdapter);
   }
 
