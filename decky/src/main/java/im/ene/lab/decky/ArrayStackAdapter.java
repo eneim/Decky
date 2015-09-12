@@ -28,7 +28,7 @@ import java.util.ArrayList;
 /**
  * Created by eneim on 9/10/15.
  */
-public class ArrayStackAdapter<T> extends BaseStackAdapter<T> {
+public class ArrayStackAdapter<T> extends Adapter<T> {
 
   private ArrayAdapter<T> mAdapter;
 
@@ -36,7 +36,7 @@ public class ArrayStackAdapter<T> extends BaseStackAdapter<T> {
                            @LayoutRes int resource,
                            @IdRes int textViewResourceId,
                            ArrayList<T> items) {
-    super(items);
+    super(context, items);
     mAdapter = new ArrayAdapter<>(context, resource, textViewResourceId, mMainStack);
   }
 

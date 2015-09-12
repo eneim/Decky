@@ -18,9 +18,9 @@ package im.ene.lab.swipecards;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Toast;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -76,23 +76,18 @@ public class MainActivity extends AppCompatActivity {
     });
 
     mStackView.setOnSwipeListener(new StackView.OnCardSwipeListener() {
-      @Override public void onExiting(View view, float offset) {
-        Log.d("exiting", offset + "");
-      }
 
-      @Override public void onExited(View view) {
+      @Override public void onSwipingOffset(StackView parent, View view, float offset) {
 
       }
 
-      @Override public void onExitToLeft(View view) {
-
+      @Override public void onExited(StackView parent, View view,
+                                     @StackView.Direction.Type int direction) {
+        String item = mAdapter.getItem(0);  // latest exited item
+        Toast.makeText(MainActivity.this, "Exited item: " + item, Toast.LENGTH_SHORT).show();
       }
 
-      @Override public void onExitToRight(View view) {
-
-      }
-
-      @Override public void onAdapterAboutToEmpty(int count) {
+      @Override public void onAdapterAboutToEmpty(int adapterCount) {
 
       }
     });
@@ -102,4 +97,5 @@ public class MainActivity extends AppCompatActivity {
     ButterKnife.unbind(this);
     super.onDestroy();
   }
+
 }

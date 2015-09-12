@@ -16,6 +16,7 @@
 
 package im.ene.lab.decky;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.BaseAdapter;
 
@@ -24,24 +25,44 @@ import java.util.Stack;
 
 /**
  * Created by eneim on 9/10/15.
+ *
+ * @param <T>
  */
-public abstract class BaseStackAdapter<T> extends BaseAdapter {
+public abstract class Adapter<T> extends BaseAdapter {
 
   static final Integer LAST_SWIPE_UNDEFINED = 0;
   static final Integer LAST_SWIPE_LEFT = 1;
   static final Integer LAST_SWIPE_RIGHT = 2;
 
+  /**
+   * Stack to stores objects which are swiped to left
+   */
   private final Stack<T> mLeftStack = new Stack<>();
+
+  /**
+   * Stack to stores objects which are swiped to right
+   */
   private final Stack<T> mRightStack = new Stack<>();
+
+  /**
+   * Stack to stores swipe direction, defined by constants above
+   */
   private final Stack<Integer> mActions = new Stack<>();
+
+  /**
+   * Main object storage
+   */
   protected ArrayList<T> mMainStack = new ArrayList<>();
 
-  public BaseStackAdapter(ArrayList<T> items) {
-    this();
+  public Adapter(Context context, ArrayList<T> items) {
+    this(context);
     mMainStack = items;
   }
 
-  public BaseStackAdapter() {
+  /**
+   * @param context
+   */
+  public Adapter(Context context) {
     super();
     mActions.push(LAST_SWIPE_UNDEFINED);
   }
@@ -63,10 +84,17 @@ public abstract class BaseStackAdapter<T> extends BaseAdapter {
 
   }
 
+  /**
+   * @return
+   */
   @Override public final int getCount() {
     return mMainStack.size();
   }
 
+  /**
+   * @param position
+   * @return
+   */
   @Override public final T getItem(int position) {
     if (position < 0 || position > mMainStack.size()) {
       return null;
@@ -168,4 +196,5 @@ public abstract class BaseStackAdapter<T> extends BaseAdapter {
       }
     }
   }
+
 }

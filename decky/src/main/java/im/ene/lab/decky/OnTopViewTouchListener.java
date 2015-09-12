@@ -261,11 +261,10 @@ abstract class OnTopViewTouchListener implements View.OnTouchListener {
       @Override
       public void onAnimationEnd(Animator animation) {
         if (isSwipeToLeft) {
-          onExitToLeft(mFrame);
+          onExited(mFrame, StackView.Direction.LEFT);
         } else {
-          onExitToRight(mFrame);
+          onExited(mFrame, StackView.Direction.RIGHT);
         }
-        onExited(mFrame);
         mIsAnimationRunning = false;
       }
     });
@@ -325,17 +324,17 @@ abstract class OnTopViewTouchListener implements View.OnTouchListener {
   /**
    * @param view
    */
-  abstract void onExitToLeft(View view);
+//  abstract void onExitToLeft(View view);
 
   /**
    * @param view
    */
-  abstract void onExitToRight(View view);
+//  abstract void onExitToRight(View view);
 
   /**
    *
    */
-  abstract void onExited(View view);
+  abstract void onExited(View view, @StackView.Direction.Type int direction);
 
   public float rightBorder() {
     return 3 * mParentWidth / 4.f;

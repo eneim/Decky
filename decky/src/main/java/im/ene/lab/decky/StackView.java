@@ -22,45 +22,50 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.database.DataSetObserver;
 import android.graphics.PointF;
 import android.os.Build;
+import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
+
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 
 /**
  * Created by eneim on 9/10/15.
  */
-public class StackView extends BaseStackView {
+public class StackView extends AdapterView<Adapter> {
 
+  protected Adapter mAdapter;
+  protected int mHeightMeasureSpec;
+  protected int mWidthMeasureSpec;
+
+  private DataSetObserver mDataSetObserver;
   /**
    * Number of cards on hand ...
    */
   private int mOnHandStackCount = 3;
-
   /**
    * Number of cards left (on the deck and hand)
    */
   private int mAdapterThreshold = 10;
-
   /**
    * Rotation animation degree
    */
   private float mRotateDegree = 15.f;
-
   /**
    * A index tracker for cards on hand
    */
   private int mStackBottomIndex = 0;
-
   private boolean mIsInLayout = false;
-
   /**
    * Listener for fling action
    */
   private OnCardSwipeListener mOnCardSwipeListener;
-
   /**
    * Card on top of the stack
    */
@@ -122,8 +127,26 @@ public class StackView extends BaseStackView {
     this.mOnItemClickListener = onItemClickListener;
   }
 
-  @Override public BaseStackAdapter getAdapter() {
+  @Override public Adapter getAdapter() {
     return mAdapter;
+  }
+
+  @Override public void setAdapter(Adapter adapter) {
+    if (adapter == null) {
+      throw new IllegalArgumentException("Adapter must not be null");
+    }
+
+    if (mAdapter != null && mDataSetObserver != null) {
+      mAdapter.unregisterDataSetObserver(mDataSetObserver);
+      mDataSetObserver = null;
+    }
+
+    mAdapter = adapter;
+
+    if (mDataSetObserver == null) {
+      mDataSetObserver = new AdapterDataSetObserver();
+      mAdapter.registerDataSetObserver(mDataSetObserver);
+    }
   }
 
   @Override
@@ -167,6 +190,18 @@ public class StackView extends BaseStackView {
     }
   }
 
+  @Override public View getSelectedView() {
+    return getTopView();
+  }
+
+  @Override public void setSelection(int position) {
+    swipeToCard(position);
+  }
+
+  public View getTopView() {
+    return mTopView;
+  }
+
   private void layoutChildren(int startingIndex, int adapterCount) {
     int maxViewIndex = Math.min(adapterCount, mOnHandStackCount) - 1;
     while (startingIndex <= maxViewIndex) {
@@ -189,7 +224,7 @@ public class StackView extends BaseStackView {
         mOnTopViewTouchListener = new OnTopViewTouchListener(this, mTopView, mRotateDegree) {
           @Override void onFlingTopView(float offset) {
             if (mOnCardSwipeListener != null) {
-              mOnCardSwipeListener.onExiting(mTopView, offset);
+              mOnCardSwipeListener.onSwipingOffset(StackView.this, mTopView, offset);
             }
           }
 
@@ -200,26 +235,22 @@ public class StackView extends BaseStackView {
             }
           }
 
-          @Override void onExitToLeft(View view) {
+          @Override void onExited(View view, int direction) {
             if (mOnCardSwipeListener != null) {
-              mOnCardSwipeListener.onExitToLeft(view);
+              mOnCardSwipeListener.onExited(StackView.this, mTopView, direction);
             }
 
-            mAdapter.swipeToLeft();
-          }
-
-          @Override void onExitToRight(View view) {
-            if (mOnCardSwipeListener != null) {
-              mOnCardSwipeListener.onExitToRight(view);
+            switch (direction) {
+              case Direction.LEFT:
+                mAdapter.swipeToLeft();
+                break;
+              case Direction.RIGHT:
+                mAdapter.swipeToRight();
+                break;
+              default:
+                break;
             }
 
-            mAdapter.swipeToRight();
-          }
-
-          @Override void onExited(View view) {
-            if (mOnCardSwipeListener != null) {
-              mOnCardSwipeListener.onExited(mTopView);
-            }
             mTopView = null;
           }
         };
@@ -292,7 +323,12 @@ public class StackView extends BaseStackView {
         childLeft + childMeasuredWidth, childTop + childMeasuredHeight);
   }
 
-  @Override public void swipeToCard(final int position) {
+  /**
+   * Dynamically swipe to a specific position
+   *
+   * @param position in adapter
+   */
+  public void swipeToCard(final int position) {
     // swipeToPosition(0) doable IFF mLeftStack.size() + mRightStack.size() = 0;
     // swipeToPosition(index) doable IFF mLeftStack.size() + mRightStack.size() <= n;
     if (position >= mAdapter.getCount()) {
@@ -309,6 +345,8 @@ public class StackView extends BaseStackView {
     }
 
     int offset;
+
+    // recursively swipe to next position, until we meet the required position
     if ((offset = position - mAdapter.getTotalCount() + mAdapter.getCount()) > 0) {
       final boolean isEven = offset % 2 == 0;
       postDelayed(new Runnable() {
@@ -332,10 +370,6 @@ public class StackView extends BaseStackView {
         }
       }, 100);
     }
-  }
-
-  @Override public View getTopView() {
-    return mTopView;
   }
 
   public void swipeToLeft() {
@@ -384,15 +418,38 @@ public class StackView extends BaseStackView {
 
   public interface OnCardSwipeListener {
 
-    void onExiting(View view, float offset);
+    /**
+     * @param view   the view which is being swiped
+     * @param offset swiping offset. positive offset for swiping to right, left otherwise
+     */
+    void onSwipingOffset(StackView parent, View view, float offset);
 
-    void onExited(View view);
+    void onExited(StackView parent, View view, @Direction.Type int direction);
 
-    void onExitToLeft(View view);
+    void onAdapterAboutToEmpty(int adapterCount);
+  }
 
-    void onExitToRight(View view);
+  public static class Direction {
+    public static final int LEFT = 1;
 
-    void onAdapterAboutToEmpty(int count);
+    public static final int RIGHT = 2;
+
+    @IntDef({LEFT, RIGHT})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface Type {
+    }
+  }
+
+  private class AdapterDataSetObserver extends DataSetObserver {
+    @Override
+    public void onChanged() {
+      requestLayout();
+    }
+
+    @Override
+    public void onInvalidated() {
+      requestLayout();
+    }
   }
 
 }
