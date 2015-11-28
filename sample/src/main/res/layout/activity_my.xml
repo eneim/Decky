@@ -1,0 +1,51 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/unnamedColor3"
+    tools:context=".MyActivity">
+
+
+    <include
+        android:id="@+id/servce_selection_toolbar"
+        layout="@layout/toolbar_simple"/>
+
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/service_selection_tabbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="44dp"
+        app:tabMode="fixed"/>
+
+
+    <include layout="@layout/service_selection_buttons"/>
+
+
+    <!--<Button-->
+    <!--android:id="@+id/service_selection_restart_button"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:text="restart ServiceCard Button Title"-->
+    <!--android:layout_centerInParent="true"-->
+    <!--android:textSize="17dp"-->
+    <!--android:textStyle="bold"-->
+    <!--/>-->
+
+
+    <im.ene.lab.swipecards.flingswipe.SwipeFlingAdapterView
+        android:id="@+id/service_selection_flingswipe"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_below="@id/servce_selection_toolbar"
+        app:rotation_degrees="15.5"
+        app:swipe_sensitivity="0.9"/>
+
+
+</RelativeLayout>
+

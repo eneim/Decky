@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Decky Swipe Cards Sample</string>
 
+    <string name="title_activity_service_selection">ServiceSelectionActivity</string>
+
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
 </resources>

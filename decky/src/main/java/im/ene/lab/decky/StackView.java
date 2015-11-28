@@ -35,9 +35,7 @@ import android.widget.FrameLayout;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
-/**
- * Created by eneim on 9/10/15.
- */
+
 public class StackView extends AdapterView<Adapter> {
 
   protected Adapter mAdapter;
@@ -441,6 +439,12 @@ public class StackView extends AdapterView<Adapter> {
   }
 
   private class AdapterDataSetObserver extends DataSetObserver {
+
+    /**
+     * Please reference to {@link android.widget.AbsListView}
+     * for better implementation
+     */
+
     @Override
     public void onChanged() {
       requestLayout();

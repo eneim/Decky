@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:layout_marginTop="40dp"
+             android:layout_marginLeft="10dp"
+             android:layout_marginRight="10dp"
+             android:layout_marginBottom="120dp"
+             android:background="@drawable/rounded_corner"
+             android:padding="1dp">
+
+
+    <com.makeramen.roundedimageview.RoundedImageView
+        android:id="@+id/service_card_imageview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/service_card_bottom_layout"
+        android:src="@drawable/card_image"
+        app:riv_corner_radius_top_left="@dimen/borderRadius"
+        app:riv_corner_radius_top_right="@dimen/borderRadius"
+        app:riv_oval="false"
+        android:scaleType="centerCrop"
+        android:transitionName="transition_service_card" />
+
+
+    <RelativeLayout
+        android:id="@+id/service_card_discount_layout"
+        android:layout_width="74dp"
+        android:layout_height="74dp"
+        android:background="@drawable/service_selection_discount_background"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="17dp"
+        android:layout_marginRight="17dp" >
+
+        <TextView
+            android:id="@+id/service_card_discount_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/whiteColor"
+            android:textSize="21dp"
+            android:textStyle="bold"
+            android:text="-10%"/>
+
+    </RelativeLayout>
+
+
+    <ImageView
+        android:id="@+id/swipe_card_liked_indicator"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/liked_button"
+        android:tint="@color/actionColor"
+        android:alpha="0"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <ImageView
+        android:id="@+id/swipe_card_nope_indicator"
+        android:layout_width="55dp"
+        android:layout_height="55dp"
+        android:src="@drawable/nope_button"
+        android:tint="@color/unnamedColor5"
+        android:alpha="0"
+        android:layout_marginRight="20dp"
+        android:layout_alignTop="@+id/swipe_card_liked_indicator"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_above="@+id/service_card_bottom_layout"
+        android:background="@color/cardBackground"
+        android:alpha="0.8"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"/>
+
+    <RelativeLayout
+        android:id="@id/service_card_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:layout_alignParentBottom="true" >
+
+
+        <TextView
+            android:id="@+id/service_card_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Genießen Sie unseren großen Sonntagsbrunch mit Live-Musik"
+            android:textSize="21dp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:textColor="@android:color/white"
+            android:layout_marginTop="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+
+        <TextView
+            android:id="@+id/service_card_location"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Company"
+            android:lines="1"
+            android:ellipsize="end"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:textColor="@color/unnamedColor5"
+            android:textSize="9dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="4dp"/>
+
+    </RelativeLayout>
+
+
+
+
+</RelativeLayout>

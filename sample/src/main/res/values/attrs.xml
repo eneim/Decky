@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SwipeFlingAdapterView">
+        <attr name="SwipeFlingStyle" format="reference"/>
+        <!--<attr name="rotation_degrees" format="float"/>-->
+        <!--<attr name="min_adapter_stack" format="integer"/>-->
+        <attr name="max_visible" format="integer"/>
+        <attr name="animation_duration" format="integer"/>
+        <attr name="swipe_sensitivity" format="float"/>
+    </declare-styleable>
+
+</resources>

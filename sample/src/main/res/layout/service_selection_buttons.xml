@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_marginBottom="14dp"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:layout_alignParentBottom="true" >
+
+
+    <ImageButton
+        android:id="@+id/nopeButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/nope_button_states"
+        android:layout_margin="10dp"
+        android:paddingRight="5dp" />
+
+
+    <ImageButton
+        android:id="@+id/likedButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/liked_button_states"
+        android:layout_margin="10dp"
+        android:paddingLeft="5dp" />
+
+</LinearLayout>
